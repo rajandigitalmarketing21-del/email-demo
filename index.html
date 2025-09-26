@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Email Opt-in Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .message {
+      font-size: 14px;
+      margin-top: 15px;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 id="title">Email Opt-in Form</h2>
+
+    <form id="emailForm">
+      <input type="email" id="emailInput" placeholder="Enter your email" required>
+      <button type="submit">Submit</button>
+    </form>
+
+    <p id="message" class="message"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById("emailForm");
+    const input = document.getElementById("emailInput");
+    const message = document.getElementById("message");
+    const title = document.getElementById("title");
+
+    // Get email from URL
+    const params = new URLSearchParams(window.location.search);
+    const emailFromUrl = params.get("email");
+
+    if (emailFromUrl) {
+      // Hide form if email already exists
+      form.style.display = "none";
+      title.textContent = "Welcome!";
+      message.textContent = "Your email (" + emailFromUrl + ") is already captured. No need to opt-in again.";
+      message.classList.add("success");
+    }
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = input.value.trim();
+
+      // Add email to URL
+      window.location.href = window.location.pathname + "?email=" + encodeURIComponent(email);
+    });
+  </script>
+</body>
+</html>
